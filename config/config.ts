@@ -82,6 +82,7 @@ export default defineConfig({
               name: 'transfer',
               icon: 'table',
               path: '/transfer',
+              authority: ['admin', 'user'],
               routes: [
                 {
                   path: '/transfer/record',

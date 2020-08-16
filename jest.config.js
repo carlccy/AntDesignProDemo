@@ -9,5 +9,6 @@ module.exports = {
   setupFiles: ['<rootDir>/test.setup.js', '<rootDir>/test.shim.js'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
+    '^@mock/(.*)$': '<rootDir>/mock/$1',
   },
 };

@@ -19,6 +19,7 @@
     "strict": true,
     "paths": {
       "@/*": ["./src/*"],
+      "@mock/*": ["./mock/*"],
       "@@/*": ["./src/.umi/*"]
     }
   },

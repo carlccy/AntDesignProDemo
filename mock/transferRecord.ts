@@ -4,7 +4,7 @@ import { parse } from 'url';
 import { TableListItem, TableListParams } from '@/pages/Transfer/Record/data';
 
 // mock tableListDataSource
-const genList = (current: number, pageSize: number) => {
+export const genList = (current: number, pageSize: number) => {
   const tableListDataSource: TableListItem[] = [];
 
   for (let i = 0; i < pageSize; i += 1) {
@@ -18,7 +18,7 @@ const genList = (current: number, pageSize: number) => {
       amount: Math.floor(Math.random() * 1000),
       fromAccount: ['BOS:123456', 'UBS SG:2123', 'JPM:412312'][i % 3],
       toAccount: ['VP:123456', 'UOB: 222132', 'CICC: 412312'][i % 3],
-      status: i % 3
+      status: i % 3,
     });
   }
   tableListDataSource.reverse();
@@ -27,7 +27,7 @@ const genList = (current: number, pageSize: number) => {
 
 let tableListDataSource = genList(1, 100);
 
-function getRecord(req: Request, res: Response, u: string) {
+export function getRecord(req: Request, res: Response, u: string) {
   let realUrl = u;
   if (!realUrl || Object.prototype.toString.call(realUrl) !== '[object String]') {
     realUrl = req.url;
@@ -50,7 +50,11 @@ function getRecord(req: Request, res: Response, u: string) {
     dataSource = dataSource.filter((data) => data.status === Number(params.status));
   }
   if (params.dateFrom && params.dateTo) {
-    dataSource = dataSource.filter((data) => new Date(data.date) > new Date(String(params.dateFrom)) && new Date(data.date) < new Date(String(params.dateTo)));
+    dataSource = dataSource.filter(
+      (data) =>
+        new Date(data.date) > new Date(String(params.dateFrom)) &&
+        new Date(data.date) < new Date(String(params.dateTo)),
+    );
   }
   const result = {
     data: dataSource,
@@ -84,7 +88,7 @@ function postRecord(req: Request, res: Response, u: string, b: Request) {
           id: tableListDataSource.length,
           date: new Date(),
           status: 0,
-          ...rest
+          ...rest,
         };
         tableListDataSource.unshift(newRecord);
         return res.json(newRecord);
